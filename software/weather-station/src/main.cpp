@@ -54,6 +54,6 @@ void loop() {
   client.loop();
   ldr->measure();
   pd->measure();
-  bmp->measure(ALL_BMP);
-  dht->measure(ALL_DHT);
+  bmp->measure(ALL);
+  dht->measure(ALL);
 }

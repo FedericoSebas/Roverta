@@ -6,12 +6,6 @@
 #include "Arduino.h"
 #include <DHT.h>
 
-enum MEASUREMENTS_DHT11{
-TEMPERATURE_DHT11,
-MOISTURE_DHT11,
-ALL_DHT11
-};
-
 
 #define TEMPERATURE_MAX_DHT 25
 #define TEMPERATURE_MIN_DHT 16

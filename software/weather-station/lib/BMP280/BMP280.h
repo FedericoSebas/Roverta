@@ -7,12 +7,6 @@
 #include "Arduino.h"
 #include <Adafruit_BMP280.h>
 
-enum MEASUREMENTS_BMP{
-TEMPERATURE_BMP,
-PRESSURE_BMP,
-ALTITUDE_BMP,
-ALL_BMP
-};
 
 #define TEMPERATURE_MAX_BMP 25
 #define TEMPERATURE_MIN_BMP 16

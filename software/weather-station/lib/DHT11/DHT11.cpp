@@ -9,15 +9,15 @@ int SensorDHT11::getMeasurement(int magnitude)
 
 void SensorDHT11::measure(int magnitude)
 {
-  if(magnitude == TEMPERATURE_DHT11){
-    measurement[TEMPERATURE_DHT11] = readTemperature();
+  if(magnitude == TEMPERATURE){
+    measurement[TEMPERATURE] = readTemperature();
   }
-  else if(magnitude == MOISTURE_DHT11){
-    measurement[MOISTURE_DHT11] = readHumidity();
+  else if(magnitude == MOISTURE){
+    measurement[MOISTURE] = readHumidity();
   }
-  else if(magnitude == ALL_DHT11){
-    measurement[TEMPERATURE_DHT11] = readTemperature();
-    measurement[MOISTURE_DHT11] = readHumidity();
+  else if(magnitude == ALL){
+    measurement[TEMPERATURE] = readTemperature();
+    measurement[MOISTURE] = readHumidity();
   }
 }
 
@@ -25,34 +25,34 @@ void SensorDHT11::publishMeasurement(int magnitude,int timeout)
 {
   StaticJsonDocument<200> ObjtTemperature;
   ObjtTemperature["unit"] = "ºC";
-  ObjtTemperature["value"] = measurement[TEMPERATURE_DHT11];
+  ObjtTemperature["value"] = measurement[TEMPERATURE];
 
   serializeJson(ObjtTemperature, bufferTemperature);
 
   
   StaticJsonDocument<200> ObjtMoisutre;
   ObjtMoisutre["unit"] = "%";
-  ObjtMoisutre["value"] = measurement[MOISTURE_DHT11];
+  ObjtMoisutre["value"] = measurement[MOISTURE];
 
   serializeJson(ObjtMoisutre, bufferMoisture);
 
-  if(magnitude == TEMPERATURE_DHT11){
-    if (millis() > lastMsgDHT11[TEMPERATURE_DHT11] + timeout) {
-    lastMsgDHT11[TEMPERATURE_DHT11] = millis(); 
+  if(magnitude == TEMPERATURE){
+    if (millis() > lastMsgDHT11[TEMPERATURE] + timeout) {
+    lastMsgDHT11[TEMPERATURE] = millis(); 
     client.publish("sensor/dht11/temperature", bufferTemperature);
   }
   }
   
-  if(magnitude == MOISTURE_DHT11){
-    if (millis() > lastMsgDHT11[MOISTURE_DHT11] + timeout) {
-    lastMsgDHT11[MOISTURE_DHT11] = millis(); 
+  if(magnitude == MOISTURE){
+    if (millis() > lastMsgDHT11[MOISTURE] + timeout) {
+    lastMsgDHT11[MOISTURE] = millis(); 
     client.publish("sensor/dht11/moisture", bufferMoisture);
   }
   }
   
-  if(magnitude == ALL_DHT11){
-    if (millis() > lastMsgDHT11[ALL_DHT11] + timeout) {
-    lastMsgDHT11[ALL_DHT11] = millis(); 
+  if(magnitude == ALL){
+    if (millis() > lastMsgDHT11[ALL] + timeout) {
+    lastMsgDHT11[ALL] = millis(); 
     client.publish("sensor/dht11/temperature", bufferTemperature);
     client.publish("sensor/dht11/moisture", bufferMoisture);
   }

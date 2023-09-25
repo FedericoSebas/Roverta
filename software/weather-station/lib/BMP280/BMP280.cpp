@@ -11,19 +11,19 @@ int BMP280::getMeasurement(int magnitude)
 
 void BMP280::measure(int magnitude)
 {
-  if(magnitude == TEMPERATURE_BMP){
-    measurement[TEMPERATURE_BMP] = readTemperature();
+  if(magnitude == TEMPERATURE){
+    measurement[TEMPERATURE] = readTemperature();
   }
-  else if(magnitude == PRESSURE_BMP){
-    measurement[PRESSURE_BMP] = readPressure();
+  else if(magnitude == PRESSURE){
+    measurement[PRESSURE] = readPressure();
   }
-  else if(magnitude == ALTITUDE_BMP){
-    measurement[ALTITUDE_BMP] = readAltitude(1013.25);
+  else if(magnitude == ALTITUDE){
+    measurement[ALTITUDE] = readAltitude(1013.25);
   }
-  else if(magnitude == ALL_BMP){
-    measurement[TEMPERATURE_BMP] = readTemperature();
-    measurement[PRESSURE_BMP] = readPressure();
-    measurement[ALTITUDE_BMP] = readAltitude(1013.25);
+  else if(magnitude == ALL){
+    measurement[TEMPERATURE] = readTemperature();
+    measurement[PRESSURE] = readPressure();
+    measurement[ALTITUDE] = readAltitude(1013.25);
   }
 }
 
@@ -32,45 +32,45 @@ void BMP280::publishMeasurement(int magnitude,int timeout)
 {
   StaticJsonDocument<200> ObjtTemperature;
   ObjtTemperature["unit"] = "ºC";
-  ObjtTemperature["value"] = measurement[TEMPERATURE_BMP];
+  ObjtTemperature["value"] = measurement[TEMPERATURE];
 
   serializeJson(ObjtTemperature, bufferTemperature);
 
   StaticJsonDocument<200> ObjtPressure;
   ObjtPressure["unit"] = "hPa";
-  ObjtPressure["value"] = measurement[PRESSURE_BMP];
+  ObjtPressure["value"] = measurement[PRESSURE];
 
   serializeJson(ObjtPressure, bufferPressure);
   
   StaticJsonDocument<200> ObjtAltitude;
   ObjtAltitude["unit"] = "MASL";
-  ObjtAltitude["value"] = measurement[ALTITUDE_BMP];
+  ObjtAltitude["value"] = measurement[ALTITUDE];
 
   serializeJson(ObjtAltitude, bufferAltitude);
   
   
 
-  if(magnitude == TEMPERATURE_BMP){
-    if (millis() > lastMsgBMP280[TEMPERATURE_BMP] + timeout) {
-    lastMsgBMP280[TEMPERATURE_BMP] = millis(); 
+  if(magnitude == TEMPERATURE){
+    if (millis() > lastMsgBMP280[TEMPERATURE] + timeout) {
+    lastMsgBMP280[TEMPERATURE] = millis(); 
     client.publish("sensor/bmp280/temperature", bufferTemperature);
   }
   }
   
-  if(magnitude == PRESSURE_BMP){
-    if (millis() > lastMsgBMP280[PRESSURE_BMP] + timeout) {
-    lastMsgBMP280[PRESSURE_BMP] = millis(); 
+  if(magnitude == PRESSURE){
+    if (millis() > lastMsgBMP280[PRESSURE] + timeout) {
+    lastMsgBMP280[PRESSURE] = millis(); 
     client.publish("sensor/bmp280/pressure", bufferPressure);
   }
-  if(magnitude == ALTITUDE_BMP){
-    if (millis() > lastMsgBMP280[ALTITUDE_BMP] + timeout) {
-    lastMsgBMP280[ALTITUDE_BMP] = millis(); 
+  if(magnitude == ALTITUDE){
+    if (millis() > lastMsgBMP280[ALTITUDE] + timeout) {
+    lastMsgBMP280[ALTITUDE] = millis(); 
     client.publish("sensor/bmp280/altitude", bufferAltitude);
   }
   }
-  if(magnitude == ALL_BMP){
-    if (millis() > lastMsgBMP280[ALL_BMP] + timeout) {
-    lastMsgBMP280[ALL_BMP] = millis(); 
+  if(magnitude == ALL){
+    if (millis() > lastMsgBMP280[ALL] + timeout) {
+    lastMsgBMP280[ALL] = millis(); 
     client.publish("sensor/bmp280/temperature", bufferTemperature);
     client.publish("sensor/bmp280/pressure", bufferPressure);
     client.publish("sensor/bmp280/altitude", bufferAltitude);
