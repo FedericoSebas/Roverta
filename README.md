@@ -16,7 +16,11 @@ La estación meteorológica es controlada por un ESP32 y utiliza varios sensores
 
 - **BMP280**: Este es un sensor digital que puede medir la presión barométrica y la temperatura. La presión barométrica se puede utilizar para calcular la altitud, lo que puede ser útil para determinar la posición del rover.
 
-![Diagrama del Rover](./hardware/weather-station/schema/Schema.pdf)
+![Diagrama del Rover](./hardware/weather-station/schema/Schema.png)
+
+![PCB del Rover Capa B](./hardware/weather-station/pcb/PCB_B_Cu.png)
+
+![PCB del Rover Capa F](./hardware/weather-station/pcb/PCB_F_Cu.png)
 
 ## Software
 
