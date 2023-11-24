@@ -1,5 +1,5 @@
-#ifndef DHT11_H
-#define DHT11_H
+#ifndef DHT22_H
+#define DHT22_H
 
 #include "Sensor.h"
 #include <ArduinoJson.h>
@@ -13,7 +13,7 @@
 #define MOISTURE_MIN_DHT 20
 
 
-class SensorDHT11 : public Sensor, public DHT
+class SensorDHT22 : public Sensor, public DHT
 {
 private:
   int measurement[2];
@@ -25,20 +25,20 @@ private:
   char bufferMoisture[520];
   char bufferTemperature[520];
   
-  long unsigned lastMsgDHT11[3] = {0,0,0};
+  long unsigned lastMsg[4] = {0,0,0,0};
 
 public:
 //***functions not used***
 
-  int getMeasurement(){return 0;}
+int getMeasurement(){return 0;}
 
   void measure(){}
 
-  void publishMeasurement(){}
+  void publishMeasurement(int timeout){}
 
 //end
 
-  SensorDHT11(Mqtt &defaulClient, int pin);
+  SensorDHT22(Mqtt &defaulClient, int pin);
 
   int getMeasurement(int magnitude);
   

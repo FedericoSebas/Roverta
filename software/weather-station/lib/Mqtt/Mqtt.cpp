@@ -14,6 +14,17 @@ Mqtt::Mqtt(WiFiClientSecure &espClient) : PubSubClient(espClient)
   // setCallback(callbackFunc);
 }
 
+
+Mqtt::Mqtt(WiFiClient &espClient) : PubSubClient(espClient)
+{
+  // If is a public IP address
+  setServer(mqttServer, port);
+
+  // If is a private IP address
+  // setServer(mqttServer, port);
+  // setCallback(callbackFunc);
+}
+
 Mqtt::Mqtt(WiFiClient &espClient, char *server, int port) : PubSubClient(espClient)
 {
   setServer(mqttServer, port);
@@ -87,4 +98,4 @@ void Mqtt::wifiConnect()
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   Serial.println(WiFi.macAddress());
-}
+}   

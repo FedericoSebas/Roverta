@@ -1,2 +1,2 @@
-#define ssid "Wokwi-GUEST"
-#define password ""
+#define ssid "ROVERTA"
+#define password "explorador"

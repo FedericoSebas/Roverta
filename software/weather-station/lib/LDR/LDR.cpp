@@ -20,7 +20,7 @@ void LDR::measure()
   }
 }
 
-void LDR::publishMeasurement()
+void LDR::publishMeasurement(int timeout)
 {
   StaticJsonDocument<200> ObjtLuxPercentage;
   ObjtLuxPercentage["unit"] = "lux percent/s";
@@ -28,7 +28,10 @@ void LDR::publishMeasurement()
 
   serializeJson(ObjtLuxPercentage, bufferLuxPercentage);
 
-  client.publish("sensor/ldr/lux", bufferLuxPercentage);
+  if(millis() > lastMsg + timeout){
+    lastMsg = millis();
+    client.publish("sensor/ldr/lux", bufferLuxPercentage);
+  }
 }
 
 void LDR::callbackTopic(char *topic, byte *message, unsigned int length)

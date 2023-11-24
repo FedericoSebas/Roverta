@@ -25,11 +25,13 @@ private:
   volatile int luxMin = LUX_MIN;
   volatile int luxMax = LUX_MAX;
 
+  long unsigned lastMsg = 0;
+
   char bufferLuxPercentage[520];
 
 public:
 //***functions not used***
-  int getMeasurement(int magnitude){return 0;}
+int getMeasurement(int magnitude){return 0;}
 
   void measure(int magnitude){}
 
@@ -43,7 +45,7 @@ public:
 
   void measure();
 
-  void publishMeasurement();
+  void publishMeasurement(int timeout);
 
   void callbackTopic(char *topic, byte *message, unsigned int length);
 

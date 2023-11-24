@@ -13,7 +13,7 @@ void PD::measure()
   irPercentage = map(ir, irMin, irMax, 0, 100);      
 }
 
-void PD::publishMeasurement()
+void PD::publishMeasurement(int timeout)
 {
   StaticJsonDocument<200> ObjtIrPercentage;
   ObjtIrPercentage["unit"] = "%";
@@ -21,7 +21,10 @@ void PD::publishMeasurement()
 
   serializeJson(ObjtIrPercentage, bufferLuxPercentage);
 
-  client.publish("sensor/pd/ir", bufferLuxPercentage);
+  if(millis() > lastMsg + timeout){
+    lastMsg = millis();
+    client.publish("sensor/pd/ir", bufferLuxPercentage);
+  }
 }
 
 void PD::callbackTopic(char *topic, byte *message, unsigned int length)

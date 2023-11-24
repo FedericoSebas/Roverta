@@ -71,7 +71,7 @@ class Mqtt : public PubSubClient
       "emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=\n"
       "-----END CERTIFICATE-----\n";
 
-  const int port = 8883;
+  const int port = 1883;
 
   char clientId[50];
 
@@ -90,6 +90,8 @@ enum MqttDefaultCertificates
 
 public:
   Mqtt(WiFiClientSecure &espClient);
+  
+  Mqtt(WiFiClient &espClient);
 
   Mqtt(WiFiClient &espClient, char *server, int port);
 

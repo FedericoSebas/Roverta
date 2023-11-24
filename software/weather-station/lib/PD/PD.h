@@ -18,12 +18,13 @@ private:
   int irMax = IR_MAX;
 
   char bufferLuxPercentage[520];
+  long unsigned lastMsg = 0;
 
 public:
 //***functions not used***
   PD(Mqtt &defaulClient, int pin);
 
-  int getMeasurement(int magnitude){return 0;}
+int getMeasurement(int magnitude){return 0;}
   
   void measure(int magnitude){}
   
@@ -34,7 +35,7 @@ public:
 
   void measure();
 
-  void publishMeasurement();
+  void publishMeasurement(int timeout);
 
   void callbackTopic(char *topic, byte *message, unsigned int length);
 

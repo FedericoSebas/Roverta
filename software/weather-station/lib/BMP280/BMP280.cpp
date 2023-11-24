@@ -1,7 +1,9 @@
 #include "BMP280.h"
 
-BMP280::BMP280(Mqtt &defaulClient) : Sensor(defaulClient, -1),Adafruit_BMP280() {
-  begin(0x76);
+BMP280::BMP280(Mqtt &defaulClient) : Sensor(defaulClient),Adafruit_BMP280() {
+  if (!begin(BMP280_ADDRESS_ALT)) {
+    Serial.println("Could not find a valid BMP280 sensor, check wiring!");
+  }
 }
 
 int BMP280::getMeasurement(int magnitude)
@@ -51,26 +53,27 @@ void BMP280::publishMeasurement(int magnitude,int timeout)
   
 
   if(magnitude == TEMPERATURE){
-    if (millis() > lastMsgBMP280[TEMPERATURE] + timeout) {
-    lastMsgBMP280[TEMPERATURE] = millis(); 
+    if (millis() > lastMsg[TEMPERATURE] + timeout) {
+    lastMsg[TEMPERATURE] = millis(); 
     client.publish("sensor/bmp280/temperature", bufferTemperature);
   }
   }
   
   if(magnitude == PRESSURE){
-    if (millis() > lastMsgBMP280[PRESSURE] + timeout) {
-    lastMsgBMP280[PRESSURE] = millis(); 
+    if (millis() > lastMsg[PRESSURE] + timeout) {
+    lastMsg[PRESSURE] = millis(); 
     client.publish("sensor/bmp280/pressure", bufferPressure);
   }
+  
   if(magnitude == ALTITUDE){
-    if (millis() > lastMsgBMP280[ALTITUDE] + timeout) {
-    lastMsgBMP280[ALTITUDE] = millis(); 
+    if (millis() > lastMsg[ALTITUDE] + timeout) {
+    lastMsg[ALTITUDE] = millis(); 
     client.publish("sensor/bmp280/altitude", bufferAltitude);
   }
   }
   if(magnitude == ALL){
-    if (millis() > lastMsgBMP280[ALL] + timeout) {
-    lastMsgBMP280[ALL] = millis(); 
+    if (millis() > lastMsg[ALL] + timeout) {
+    lastMsg[ALL] = millis(); 
     client.publish("sensor/bmp280/temperature", bufferTemperature);
     client.publish("sensor/bmp280/pressure", bufferPressure);
     client.publish("sensor/bmp280/altitude", bufferAltitude);

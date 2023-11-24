@@ -28,7 +28,7 @@ public:
 
   virtual int getMeasurement(int magnitude) = 0;
 
-  virtual void publishMeasurement() = 0;
+  virtual void publishMeasurement(int timeout) = 0;
 
   virtual void publishMeasurement(int magnitude, int timeout) = 0;
 
@@ -37,6 +37,8 @@ public:
   virtual void callbackSubscribe() = 0;
 
   Sensor(Mqtt &defaultClient, int pin) : client(defaultClient), pin(pin) {}
+  
+  Sensor(Mqtt &defaultClient) : client(defaultClient) {}
 };
 
 #endif

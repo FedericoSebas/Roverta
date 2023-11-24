@@ -4,6 +4,8 @@
 #include "Sensor.h"
 #include <ArduinoJson.h>
 #include "Mqtt.h"
+#include <Wire.h>
+#include <SPI.h>
 #include "Arduino.h"
 #include <Adafruit_BMP280.h>
 
@@ -28,7 +30,7 @@ private:
   float altitudeMin = ALTITUDE_MIN_BMP;
 
   
-long unsigned lastMsgBMP280[4] = {0,0,0,0};
+long unsigned lastMsg[4] = {0,0,0,0};
   
   char bufferTemperature[520];
   char bufferPressure[520];
@@ -37,11 +39,11 @@ long unsigned lastMsgBMP280[4] = {0,0,0,0};
 public:
 
 //***functions not used***
-  int getMeasurement(){return 0;}
+int getMeasurement(){return 0;}
 
   void measure(){}
 
-  void publishMeasurement(){}
+  void publishMeasurement(int timeout){}
 // end
 
   BMP280(Mqtt &defaulClient);
@@ -50,7 +52,7 @@ public:
   
   void measure(int magnitude);
 
-  void publishMeasurement(int magnitude, int timeout);
+  void publishMeasurement(int magnitude,int timeout);
 
   void callbackTopic(char *topic, byte *message, unsigned int length);
 
